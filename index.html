@@ -597,50 +597,35 @@ document.getElementById('extraToggle').addEventListener('change', function () {
   }
 });
 
-// --- ФУНКЦИОНАЛ ПЕРЕКЛЮЧЕНИЯ ТЕМЫ (ИСПРАВЛЕНО И ВОССТАНОВЛЕНО) ---
+// --- ИСПРАВЛЕННЫЙ ФУНКЦИОНАЛ ПЕРЕКЛЮЧЕНИЯ ТЕМЫ (ТЕМНАЯ ПО УМОЛЧАНИЮ) ---
 const themeToggle = document.getElementById('themeToggle');
 const htmlEl = document.documentElement; 
 const THEME_KEY = 'theme-preference';
 
-// 1. Устанавливает тему (атрибут data-theme и состояние переключателя)
+// Устанавливает тему (атрибут data-theme и состояние переключателя)
 function applyTheme(preference) {
   if (preference === 'dark') {
     htmlEl.setAttribute('data-theme', 'dark');
     themeToggle.checked = true;
-  } else if (preference === 'light') {
+  } else { // 'light'
     htmlEl.setAttribute('data-theme', 'light');
     themeToggle.checked = false;
-  } else {
-    // Если "system", удаляем атрибут, чтобы сработал @media
-    htmlEl.removeAttribute('data-theme');
-    // Проверяем систему для установки состояния переключателя
-    const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    themeToggle.checked = isSystemDark;
   }
 }
 
-// 2. Загружает сохраненные предпочтения или использует системные
+// Загружает сохраненные предпочтения ИЛИ устанавливает 'dark' по умолчанию
 function loadThemePreference() {
   const savedPreference = localStorage.getItem(THEME_KEY);
   
-  // Если пользователь никогда не переключал, используем 'system'
-  applyTheme(savedPreference || 'system');
+  // Если есть сохраненные, используем их. Иначе устанавливаем 'dark' (темная тема по умолчанию)
+  applyTheme(savedPreference || 'dark');
 }
 
-// 3. Обработка ручного переключения
+// Обработка ручного переключения
 themeToggle.addEventListener('change', function() {
   const newPreference = this.checked ? 'dark' : 'light';
   applyTheme(newPreference);
   localStorage.setItem(THEME_KEY, newPreference);
-});
-
-// Дополнительная проверка на случай, если система меняет тему (например, по расписанию)
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    // Если пользователь не выбрал принудительную тему ('dark' или 'light'),
-    // обновляем состояние переключателя, чтобы соответствовало системе.
-    if (!localStorage.getItem(THEME_KEY)) {
-        themeToggle.checked = e.matches;
-    }
 });
 
 // Запускаем загрузку темы
