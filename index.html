@@ -17,74 +17,28 @@
 <style>
   /* --- ПЕРЕМЕННЫЕ ПО УМОЛЧАНИЮ (СВЕТЛАЯ ТЕМА) --- */
   :root{
-    /* Основные цвета */
     --bg:#f2f4f7;
     --card:#ffffff;
     --accent:#0066ff;
-    
-    /* Тексты */
     --main-text:#000000;
     --muted-text:#6b6b6b; 
-    
-    /* Границы и разделители */
     --border-color:#d8dce3;
     --panel-border:#e7e9ee;
     --line-divider:#eee;
-    
-    /* Цвета состояний */
     --green:#c8f5c2;
     --red:#ffd4d4;
     --good:#0c7a27;
     --bad:#a80000;
-    
-    /* Элементы .zero */
     --zero-bg:#f4f4f4;
     --zero-border:#ccc;
     --zero-text:#555;
     --small-btn-bg:#eee;
   }
 
-  /* --- ТЕМНАЯ ТЕМА (1. Активируется системными настройками) --- */
-  @media (prefers-color-scheme: dark) {
-    :root{
-      --bg: #1c1c1e;        
-      --card: #2c2c2e;      
-      --main-text:#ffffff;
-      --muted-text:#ffffff; /* Белый для лейблов */
-      --border-color:#555;
-      --panel-border:#555;
-      --line-divider:#444;
-      --green: #2d4538;
-      --red: #4a2c2c;
-      --good: #57d657;
-      --bad: #ff6666;
-      --zero-bg: #444;
-      --zero-border: #777;
-      --zero-text: #ccc;
-      --small-btn-bg: #444;
-    }
-    
-    .card{
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
-    }
-
-    input[type="number"]:focus{
-      box-shadow:0 0 0 2px rgba(0,136,255,0.4);
-    }
-    
-    .small-btn{
-      color: #fff; 
-    }
-
-    .slider:before {
-        background-color: #f2f2f7; 
-    }
-  }
-
-  /* --- ТЕМНАЯ ТЕМА (2. Принудительное ручное переключение) --- */
-  html[data-theme="dark"] :root {
-    --bg: #1c1c1e;        
-    --card: #2c2c2e;      
+  /* --- ТЕМНАЯ ТЕМА (ПРИНУДИТЕЛЬНАЯ) --- */
+  html[data-theme="dark"]{
+    --bg: #1c1c1e;
+    --card: #2c2c2e;
     --main-text:#ffffff;
     --muted-text:#ffffff;
     --border-color:#555;
@@ -103,23 +57,21 @@
   html[data-theme="dark"] .card{
     box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
   }
+
   html[data-theme="dark"] input[type="number"]:focus{
     box-shadow:0 0 0 2px rgba(0,136,255,0.4);
   }
-  html[data-theme="dark"] .small-btn{
-    color: #fff;
-  }
+
   html[data-theme="dark"] .slider:before {
-      background-color: #f2f2f7; 
+    background-color: #f2f2f7; 
   }
-  
-  /* --- БАЗОВЫЕ СТИЛИ (Одинаковые для обеих тем) --- */
+
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
     background:var(--bg);
     margin:0;
     padding:0;
-    color: var(--main-text); 
+    color: var(--main-text);
   }
 
   .wrap{max-width:600px;margin:0 auto;padding:16px;}
@@ -142,7 +94,6 @@
     border-radius:12px;
     border:1px solid var(--border-color);
     margin-bottom:12px;
-    box-sizing:border-box;
     background: var(--card);
     color: var(--main-text);
   }
@@ -153,12 +104,7 @@
     box-shadow:0 0 0 2px rgba(0,102,255,0.2);
   }
 
-  /* --- СТИЛИ ДЛЯ РЯДА КНОПОК --- */
-  .button-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
+  .button-row { display:flex; gap:10px; align-items:center; }
 
   .btn{
     width:100%;
@@ -169,27 +115,18 @@
     color:white;
     font-size:18px;
     font-weight:600;
-    flex-grow: 1; 
+    flex-grow:1;
   }
-  
+
   .small-icon-btn {
-    padding: 14px;
-    border-radius: 12px;
-    border: 0;
-    color: white; 
-    cursor: pointer;
-    flex-shrink: 0; 
+    padding:14px;
+    border-radius:12px;
+    border:0;
+    color:white;
   }
-  .small-icon-btn.red {
-    background: var(--bad); 
-  }
-  .small-icon-btn svg {
-    display: block;
-  }
-  /* --- КОНЕЦ СТИЛЕЙ ДЛЯ РЯДА КНОПОК --- */
+  .small-icon-btn.red { background:var(--bad); }
 
   .results{display:flex;flex-direction:column;gap:16px;}
-
   .panel{
     background:var(--card);
     border-radius:16px;
@@ -197,151 +134,36 @@
     border:1px solid var(--panel-border);
   }
 
-  .panel h3{margin:0 0 10px;font-size:18px;}
-
-  .line{
-    display:flex;
-    justify-content:space-between;
-    padding:8px 0;
-    font-size:16px;
-    border-top:1px solid var(--line-divider);
-  }
-  .line:first-of-type{border-top:0;padding-top:0;}
+  .line{display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid var(--line-divider);}
+  .line:first-of-type{border-top:0;}
 
   .val{font-weight:700;}
-
-  .diff{
-    padding:6px 12px;
-    border-radius:10px;
-    min-width:90px;
-    text-align:center;
-    display:inline-block;
-    font-weight:600;
-  }
-
-  .zero{
-    background:var(--zero-bg);
-    border:1px dashed var(--zero-border);
-    color:var(--zero-text);
-  }
+  .diff{padding:6px 12px;border-radius:10px;text-align:center;font-weight:600;min-width:90px;}
+  .zero{background:var(--zero-bg);border:1px dashed var(--zero-border);color:var(--zero-text);}
 
   textarea{
-    width: 100%;
-    margin: 10px 0;
-    height: 140px;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid var(--border-color);
-    box-sizing: border-box;
-    display: block;
-    background: var(--card);
-    color: var(--main-text);
+    width:100%;height:140px;border-radius:10px;padding:10px;font-size:14px;
+    border:1px solid var(--border-color);background:var(--card);color:var(--main-text);
   }
 
-  .row{display:flex;gap:10px;}
-  .small-btn{
-    padding:8px 12px;
-    border-radius:8px;
-    border:0;
-    background:var(--small-btn-bg);
-    color: var(--main-text);
-    cursor:pointer;
-  }
-  
-  /* --- Стили для дополнительных параметров и переключателей --- */
-  .toggle-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 12px 0 6px;
-    font-size: 16px;
-  }
+  .toggle-row{display:flex;justify-content:space-between;align-items:center;margin:12px 0 6px;font-size:16px;}
 
-  #extraFields {
-    overflow: hidden;
-    max-height: 0;
-    padding: 0;
-    transition: max-height 0.35s ease, padding 0.25s ease;
-  }
+  #extraFields{overflow:hidden;max-height:0;padding:0;transition:max-height .35s ease,padding .25s ease;}
+  #extraFields.open{max-height:300px;padding:10px 0;}
 
-  #extraFields.open {
-    max-height: 300px;
-    padding: 10px 0;
+  /* Слайдер */
+  .switch{position:relative;display:inline-block;width:50px;height:28px;}
+  .switch input{opacity:0;width:0;height:0;}
+  .slider{
+    position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;transition:.4s;border-radius:28px;
+    background-color:var(--zero-bg);border:1px solid var(--zero-border);
   }
-
-  #extraFields label {
-    display: block;
-    margin: 8px 0 4px;
+  .slider:before{
+    position:absolute;content:"";height:20px;width:20px;left:4px;bottom:3px;background:white;
+    transition:.4s;border-radius:50%;
   }
-
-  #extraFields input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-    font-size: 16px;
-    box-sizing: border-box;
-    background: var(--card);
-    color: var(--main-text);
-  }
-  
-  /* --- CSS ДЛЯ КАСТОМНОГО СЛАЙДЕРА (TOGGLE SWITCH) --- */
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 50px; 
-    height: 28px; 
-  }
-
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    transition: .4s;
-    border-radius: 28px;
-    background-color: var(--zero-bg); 
-    border: 1px solid var(--zero-border);
-  }
-
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 4px;
-    bottom: 3px;
-    background-color: white; 
-    transition: .4s;
-    border-radius: 50%;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  }
-
-  /* Активное состояние */
-  input:checked + .slider {
-    background-color: var(--accent);
-    border-color: var(--accent);
-  }
-
-  input:checked + .slider:before {
-    transform: translateX(20px);
-  }
-  
-  /* Переопределение цвета ползунка в ТЕМНОЙ теме */
-  html[data-theme="dark"] .slider:before {
-      background-color: #f2f2f7; 
-  }
-
-
+  input:checked + .slider{background-color:var(--accent);border-color:var(--accent);}
+  input:checked + .slider:before{transform:translateX(20px);}
 </style>
 </head>
 
@@ -351,13 +173,13 @@
 
   <div class="card">
     <label>Фактична сума, грн</label>
-    <input id="actual" type="number" inputmode="decimal" placeholder="наприклад 155">
+    <input id="actual" type="number">
 
     <label>Пробіг, км</label>
-    <input id="distance" type="number" inputmode="decimal" step="0.01" placeholder="наприклад 3.0">
+    <input id="distance" type="number" step="0.01">
 
     <label>Коефіцієнт</label>
-    <input id="coef" type="number" inputmode="decimal" step="0.01" placeholder="наприклад 1.06">
+    <input id="coef" type="number" step="0.01">
 
     <label class="toggle-row">
       <span>Додаткові параметри</span>
@@ -369,17 +191,15 @@
 
     <div id="extraFields">
       <label>Кількість платних хвилин</label>
-      <input id="paidMinutes" type="number" step="1" placeholder="необов’язково">
+      <input id="paidMinutes" type="number">
 
       <label>Кількість проміжних точок</label>
-      <input id="midPoints" type="number" step="1" placeholder="необов’язково">
+      <input id="midPoints" type="number">
     </div>
 
     <div class="button-row">
-      <button class="small-icon-btn red" id="clearBtn" title="Очистити">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-          <path d="M16 9v10H8V9h8m-1.5-6h-5L9 4H7v2h10V4h-2l-1.5-3zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"/>
-        </svg>
+      <button class="small-icon-btn red" id="clearBtn">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="20"><path d="M16 9v10H8V9h8m-1.5-6h-5L9 4H7v2h10V4h-2l-1.5-3zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"/></svg>
       </button>
       <button class="btn" id="calcBtn">Розрахувати</button>
     </div>
@@ -400,7 +220,7 @@
       <h3>Стандарт</h3>
       <div class="line"><span>Розрахункова сума</span><span class="val" id="stdCalc">—</span></div>
       <div class="line"><span>Різниця</span><span class="diff zero" id="stdDiff">—</span></div>
-      <textarea id="stdMsg" placeholder="Повідомлення для оператора зʼявиться тут"></textarea>
+      <textarea id="stdMsg"></textarea>
       <button class="small-btn" id="copyStd">Копіювати</button>
     </div>
 
@@ -408,7 +228,7 @@
       <h3>Комфорт</h3>
       <div class="line"><span>Розрахункова сума</span><span class="val" id="cfCalc">—</span></div>
       <div class="line"><span>Різниця</span><span class="diff zero" id="cfDiff">—</span></div>
-      <textarea id="cfMsg" placeholder="Повідомлення для оператора зʼявиться тут"></textarea>
+      <textarea id="cfMsg"></textarea>
       <button class="small-btn" id="copyCf">Копіювати</button>
     </div>
 
@@ -416,242 +236,119 @@
       <h3>Бізнес</h3>
       <div class="line"><span>Розрахункова сума</span><span class="val" id="bizCalc">—</span></div>
       <div class="line"><span>Різниця</span><span class="diff zero" id="bizDiff">—</span></div>
-      <textarea id="bizMsg" placeholder="Повідомлення для оператора зʼявиться тут"></textarea>
+      <textarea id="bizMsg"></textarea>
       <button class="small-btn" id="copyBiz">Копіювати</button>
     </div>
-
   </div>
 </div>
 
 <script>
-const STD = {minKm:1.9, base:100, perKm:17.6, name:"Стандарт", extraMinute:3, extraPoint:10};
-const CFM = {minKm:2.1, base:115, perKm:19.8, name:"Комфорт", extraMinute:3, extraPoint:10};
-const BIZ = {minKm:1.6, base:140, perKm:23.5, name:"Бізнес", extraMinute:4, extraPoint:10};
+/* =============== ЛОГИКА ТАРИФОВ =============== */
+const STD = {minKm:1.9, base:100, perKm:17.6, extraMinute:3, extraPoint:10};
+const CFM = {minKm:2.1, base:115, perKm:19.8, extraMinute:3, extraPoint:10};
+const BIZ = {minKm:1.6, base:140, perKm:23.5, extraMinute:4, extraPoint:10};
 
-function calcFare(km, t){
-  return km <= t.minKm ? t.base : t.base + (km - t.minKm) * t.perKm;
-}
+function calcFare(km, t){ return km <= t.minKm ? t.base : t.base + (km - t.minKm) * t.perKm; }
+function fmt(x){ return isNaN(x) ? "—" : x.toFixed(2) + " ₴"; }
 
-function fmt(x){
-  return isNaN(x) ? "—" : x.toFixed(2) + " ₴";
-}
-
+/* =============== ЦВЕТ РАЗНИЦЫ =============== */
 function colorize(el, v){
   el.className = "diff";
-  if(isNaN(v)){
-    el.classList.add("zero");
-    el.textContent = "—";
-    return;
-  }
-
+  if(isNaN(v)){ el.classList.add("zero"); el.textContent = "—"; return;}
   el.textContent = v.toFixed(2) + " ₴";
 
-  if(v > 0){
-    el.style.background = "var(--green)";
-    el.style.color = "var(--good)";
-  } 
-  else if(v < 0){
-    el.style.background = "var(--red)";
-    el.style.color = "var(--bad)";
-  }
-  else {
-    el.classList.add("zero");
-    el.style.background = ""; 
-    el.style.color = ""; 
-  }
+  if(v > 0){ el.style.background = "var(--green)"; el.style.color="var(--good)"; }
+  else if(v < 0){ el.style.background="var(--red)"; el.style.color="var(--bad)"; }
+  else { el.classList.add("zero"); el.style.background=""; el.style.color=""; }
 }
 
-function getGreeting() {
+/* =============== ТЕКСТ СООБЩЕНИЯ =============== */
+function getGreeting(){
   const h = new Date().getHours();
-
-  if (h >= 5 && h < 12) return "Доброго ранку!🌤️";
-  if (h >= 12 && h < 17) return "Доброго дня!🌤️";
-  if (h >= 17 && h < 23) return "Доброго вечора!🌙✨";
+  if(h>=5 && h<12) return "Доброго ранку!🌤️";
+  if(h>=12 && h<17) return "Доброго дня!🌤️";
+  if(h>=17 && h<23) return "Доброго вечора!🌙✨";
   return "Доброї ночі!✨🌙";
 }
 
-function genMsg(t, km, coef, actual, paidMinutes, midPoints){
-  const baseFare = calcFare(km, t);
-  let total = baseFare * coef;
+function genMsg(t, km, coef, actual, paid, points){
+  let total = calcFare(km,t)*coef;
+  let lines = [`• Базовий тариф = ${(calcFare(km,t)*coef).toFixed(2)} грн`];
 
-  let lines = [`• Базовий тариф: (${t.base} + (${km} - ${t.minKm}) × ${t.perKm}) × ${coef} = ${(baseFare*coef).toFixed(2)} грн`];
+  if(paid>0){ total += paid*t.extraMinute; lines.push(`• Платні хвилини = ${(paid*t.extraMinute).toFixed(2)} грн`); }
+  if(points>0){ total += points*t.extraPoint; lines.push(`• Проміжні точки = ${(points*t.extraPoint).toFixed(2)} грн`); }
 
-  if(paidMinutes > 0){
-    let addPaid = paidMinutes * t.extraMinute;
-    lines.push(`• Платні хвилини (${paidMinutes} × ${t.extraMinute} грн) = ${addPaid.toFixed(2)} грн`);
-    total += addPaid;
-  }
-  if(midPoints > 0){
-    let addPoints = midPoints * t.extraPoint;
-    lines.push(`• Проміжні точки (${midPoints} × ${t.extraPoint} грн) = ${addPoints.toFixed(2)} грн`);
-    total += addPoints;
-  }
-
-  const diff = total - actual;
+  let diff = total - actual;
   if(diff <= 0) return "";
 
-  const greeting = getGreeting();
-
-  return `${greeting}
-Прошу провести перерахунок вартості поїздки.
-Розрахункова сума становить ${total.toFixed(2)} грн.
-Деталі розрахунку:
+  return `${getGreeting()}
+Прошу провести перерахунок.
+Розрахункова сума: ${total.toFixed(2)} грн
 ${lines.join("\n")}
-Фактична — ${actual.toFixed(2)} грн.
-Прошу донарахувати різницю у розмірі ${diff.toFixed(2)} грн.
-Щиро дякую!🤗`;
+Фактична: ${actual.toFixed(2)} грн
+Донарахувати: ${diff.toFixed(2)} грн.
+Дякую!`;
 }
 
-function bindCopy(btnId, taId){
-  const btn = document.getElementById(btnId);
-  btn.onclick = function(){
-    const t = document.getElementById(taId);
-    if(!t.value){
-      alert('Немає повідомлення для копіювання');
-      return;
-    }
-    t.select();
-    t.setSelectionRange(0, 99999);
-    navigator.clipboard.writeText(t.value).then(
-      () => alert('Скопійовано'),
-      () => { document.execCommand('copy'); alert('Скопійовано'); }
-    );
+/* =============== КОПИРОВАНИЕ =============== */
+function bindCopy(btn, ta){
+  document.getElementById(btn).onclick = () => {
+    let t = document.getElementById(ta);
+    if(!t.value) return alert('Немає повідомлення');
+    t.select(); navigator.clipboard.writeText(t.value); alert('Скопійовано');
   };
 }
+bindCopy("copyStd","stdMsg");
+bindCopy("copyCf","cfMsg");
+bindCopy("copyBiz","bizMsg");
 
-bindCopy('copyStd','stdMsg');
-bindCopy('copyCf','cfMsg');
-bindCopy('copyBiz','bizMsg');
-
+/* =============== КНОПКА РАСЧЁТА =============== */
 document.getElementById("calcBtn").onclick = function(){
-  const actual = parseFloat(document.getElementById("actual").value);
-  const km = parseFloat(document.getElementById("distance").value);
-  const coef = parseFloat(document.getElementById("coef").value);
-  const paidMinutes = parseInt(document.getElementById("paidMinutes").value) || 0;
-  const midPoints = parseInt(document.getElementById("midPoints").value) || 0;
+  const actual = parseFloat(actual.value);
+  const km = parseFloat(distance.value);
+  const coef = parseFloat(coef.value);
+  const paid = parseInt(paidMinutes.value)||0;
+  const points = parseInt(midPoints.value)||0;
 
-  if(isNaN(km) || isNaN(coef) || isNaN(actual)){
-    alert("Введіть коректні дані");
-    return;
-  }
+  if(isNaN(actual)||isNaN(km)||isNaN(coef)) return alert("Введіть коректні дані");
 
   const totals = {
-    std: calcFare(km, STD) * coef + paidMinutes*STD.extraMinute + midPoints*STD.extraPoint,
-    cf: calcFare(km, CFM) * coef + paidMinutes*CFM.extraMinute + midPoints*CFM.extraPoint,
-    biz: calcFare(km, BIZ) * coef + paidMinutes*BIZ.extraMinute + midPoints*BIZ.extraPoint
+    std: calcFare(km,STD)*coef + paid*STD.extraMinute + points*STD.extraPoint,
+    cf: calcFare(km,CFM)*coef + paid*CFM.extraMinute + points*CFM.extraPoint,
+    biz: calcFare(km,BIZ)*coef + paid*BIZ.extraMinute + points*BIZ.extraPoint
   };
 
-  document.getElementById("stdCalc").textContent = fmt(totals.std);
-  document.getElementById("cfCalc").textContent = fmt(totals.cf);
-  document.getElementById("bizCalc").textContent = fmt(totals.biz);
+  stdCalc.textContent = fmt(totals.std);
+  cfCalc.textContent  = fmt(totals.cf);
+  bizCalc.textContent = fmt(totals.biz);
 
-  colorize(document.getElementById("stdDiff"), actual - totals.std);
-  colorize(document.getElementById("cfDiff"), actual - totals.cf);
-  colorize(document.getElementById("bizDiff"), actual - totals.biz);
+  colorize(stdDiff, actual - totals.std);
+  colorize(cfDiff,  actual - totals.cf);
+  colorize(bizDiff, actual - totals.biz);
 
-  document.getElementById('stdMsg').value = genMsg(STD, km, coef, actual, paidMinutes, midPoints);
-  document.getElementById('cfMsg').value = genMsg(CFM, km, coef, actual, paidMinutes, midPoints);
-  document.getElementById('bizMsg').value = genMsg(BIZ, km, coef, actual, paidMinutes, midPoints);
+  stdMsg.value = genMsg(STD, km, coef, actual, paid, points);
+  cfMsg.value = genMsg(CFM, km, coef, actual, paid, points);
+  bizMsg.value = genMsg(BIZ, km, coef, actual, paid, points);
 };
 
-document.getElementById("clearBtn").onclick = function(){
-  // Очистка полей ввода и результатов... (оставлено без изменений)
-  document.getElementById("actual").value = '';
-  document.getElementById("distance").value = '';
-  document.getElementById("coef").value = '';
-  document.getElementById("paidMinutes").value = '';
-  document.getElementById("midPoints").value = '';
-  
-  document.getElementById("stdCalc").textContent = '—';
-  document.getElementById("cfCalc").textContent = '—';
-  document.getElementById("bizCalc").textContent = '—';
-  
-  colorize(document.getElementById("stdDiff"), NaN);
-  colorize(document.getElementById("cfDiff"), NaN);
-  colorize(document.getElementById("bizDiff"), NaN);
-  
-  document.getElementById('stdMsg').value = '';
-  document.getElementById('cfMsg').value = '';
-  document.getElementById('bizMsg').value = '';
-  
-  const extraToggle = document.getElementById('extraToggle');
-  const extraFields = document.getElementById('extraFields');
-  if (extraToggle.checked) {
-    extraToggle.checked = false;
-    extraFields.classList.remove('open');
+/* =============== ОЧИСТКА =============== */
+clearBtn.onclick = () => {
+  actual.value=""; distance.value=""; coef.value="";
+  paidMinutes.value=""; midPoints.value="";
+  stdCalc.textContent=cfCalc.textContent=bizCalc.textContent="—";
+  stdMsg.value=cfMsg.value=bizMsg.value="";
+  colorize(stdDiff,NaN); colorize(cfDiff,NaN); colorize(bizDiff,NaN);
+  extraToggle.checked=false; extraFields.classList.remove("open");
+};
+
+/* =============== ДОПОЛНИТЕЛЬНЫЕ ПОЛЯ =============== */
+extraToggle.onchange = () => {
+  if(extraToggle.checked) extraFields.classList.add("open");
+  else{
+    extraFields.classList.remove("open");
+    paidMinutes.value=""; midPoints.value="";
   }
 };
 
-
-document.getElementById('extraToggle').addEventListener('change', function () {
-  const extra = document.getElementById('extraFields');
-  const paidInput = document.getElementById('paidMinutes');
-  const midInput = document.getElementById('midPoints');
-
-  if (this.checked) {
-    extra.classList.add('open');
-  } else {
-    extra.classList.remove('open');
-    paidInput.value = '';
-    midInput.value = '';
-  }
-});
-
-// --- ФУНКЦИОНАЛ ПЕРЕКЛЮЧЕНИЯ ТЕМЫ (ИСПРАВЛЕНО И ВОССТАНОВЛЕНО) ---
-const themeToggle = document.getElementById('themeToggle');
-const htmlEl = document.documentElement; 
-const THEME_KEY = 'theme-preference';
-
-// 1. Устанавливает тему (атрибут data-theme и состояние переключателя)
-function applyTheme(preference) {
-  if (preference === 'dark') {
-    htmlEl.setAttribute('data-theme', 'dark');
-    themeToggle.checked = true;
-  } else if (preference === 'light') {
-    htmlEl.setAttribute('data-theme', 'light');
-    themeToggle.checked = false;
-  } else {
-    // Если "system", удаляем атрибут, чтобы сработал @media
-    htmlEl.removeAttribute('data-theme');
-    // Проверяем систему для установки состояния переключателя
-    const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    themeToggle.checked = isSystemDark;
-  }
-}
-
-// 2. Загружает сохраненные предпочтения или использует системные
-function loadThemePreference() {
-  const savedPreference = localStorage.getItem(THEME_KEY);
-  
-  // Если пользователь никогда не переключал, используем 'system'
-  applyTheme(savedPreference || 'system');
-}
-
-// 3. Обработка ручного переключения
-themeToggle.addEventListener('change', function() {
-  const newPreference = this.checked ? 'dark' : 'light';
-  applyTheme(newPreference);
-  localStorage.setItem(THEME_KEY, newPreference);
-});
-
-// Дополнительная проверка на случай, если система меняет тему (например, по расписанию)
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    // Если пользователь не выбрал принудительную тему ('dark' или 'light'),
-    // обновляем состояние переключателя, чтобы соответствовало системе.
-    if (!localStorage.getItem(THEME_KEY)) {
-        themeToggle.checked = e.matches;
-    }
-});
-
-// Запускаем загрузку темы
-loadThemePreference();
-
-// PWA Service Worker registration
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js')
-    .then(() => console.log('Service Worker зареєстрований'))
-    .catch(err => console.log('Service Worker помилка:', err));
-}
-</script>
-</body>
-</html>
+/* ===========================================================
+          *** ПРОСТОЙ И ПРАВИЛЬ
