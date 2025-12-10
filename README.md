@@ -1,2 +1,2 @@
-# UklonTest
+# UklonCalc
 Перевірка розрахунків Uklon
