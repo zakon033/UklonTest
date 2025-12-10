@@ -15,7 +15,7 @@
 <link rel="manifest" href="manifest.json">
 
 <style>
-  /* --- СВЕТЛАЯ ТЕМА (Light Mode - По умолчанию) --- */
+  /* --- ПЕРЕМЕННЫЕ ПО УМОЛЧАНИЮ (СВЕТЛАЯ ТЕМА) --- */
   :root{
     /* Основные цвета */
     --bg:#f2f4f7;
@@ -24,7 +24,7 @@
     
     /* Тексты */
     --main-text:#000000;
-    --muted-text:#6b6b6b; /* Серый текст для светлой темы */
+    --muted-text:#6b6b6b; 
     
     /* Границы и разделители */
     --border-color:#d8dce3;
@@ -44,12 +44,48 @@
     --small-btn-bg:#eee;
   }
 
+  /* --- ПРИНУДИТЕЛЬНАЯ ТЕМНАЯ ТЕМА (html.dark-mode) --- */
+  html.dark-mode :root {
+    --bg: #1c1c1e;        
+    --card: #2c2c2e;      
+    --main-text:#ffffff;
+    --muted-text:#ffffff; /* Белый для лейблов */
+    --border-color:#555;
+    --panel-border:#555;
+    --line-divider:#444;
+    --green: #2d4538;
+    --red: #4a2c2c;
+    --good: #57d657;
+    --bad: #ff6666;
+    --zero-bg: #444;
+    --zero-border: #777;
+    --zero-text: #ccc;
+    --small-btn-bg: #444;
+  }
+  
+  html.dark-mode .card{
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
+  }
+
+  html.dark-mode input[type="number"]:focus{
+    box-shadow:0 0 0 2px rgba(0,136,255,0.4);
+  }
+  
+  html.dark-mode .small-btn{
+    color: #fff; 
+  }
+
+  html.dark-mode .slider:before {
+      background-color: #f2f2f7; 
+  }
+
+  /* --- БАЗОВЫЕ СТИЛИ (Одинаковые для обеих тем) --- */
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
     background:var(--bg);
     margin:0;
     padding:0;
-    color: var(--main-text); /* Используем переменную */
+    color: var(--main-text); 
   }
 
   .wrap{max-width:600px;margin:0 auto;padding:16px;}
@@ -61,6 +97,7 @@
     padding:18px;
     box-shadow:0 6px 18px rgba(0,0,0,0.06);
     margin-bottom:16px;
+    /* Тень в темной теме задана явно выше, чтобы переопределить эту */
   }
 
   label{font-size:15px;color:var(--muted-text);margin-bottom:6px;display:block;}
@@ -99,20 +136,19 @@
     color:white;
     font-size:18px;
     font-weight:600;
-    flex-grow: 1; /* Основная кнопка занимает все место */
+    flex-grow: 1; 
   }
   
-  /* Маленькая красная кнопка с иконкой (ОЧИСТИТЬ) */
   .small-icon-btn {
     padding: 14px;
     border-radius: 12px;
     border: 0;
-    color: white; /* Цвет иконки */
+    color: white; 
     cursor: pointer;
-    flex-shrink: 0; /* Не сжимать */
+    flex-shrink: 0; 
   }
   .small-icon-btn.red {
-    background: var(--bad); /* Красный фон */
+    background: var(--bad); 
   }
   .small-icon-btn svg {
     display: block;
@@ -180,7 +216,7 @@
     cursor:pointer;
   }
   
-  /* --- Стили для дополнительных параметров --- */
+  /* --- Стили для дополнительных параметров и переключателей --- */
   .toggle-row {
     display: flex;
     justify-content: space-between;
@@ -217,7 +253,7 @@
     color: var(--main-text);
   }
   
-  /* --- CSS ДЛЯ КАСТОМНОГО СЛАЙДЕРА (ЗАМЕНА ЧЕКБОКСА) --- */
+  /* --- CSS ДЛЯ КАСТОМНОГО СЛАЙДЕРА (TOGGLE SWITCH) --- */
   .switch {
     position: relative;
     display: inline-block;
@@ -240,7 +276,7 @@
     bottom: 0;
     transition: .4s;
     border-radius: 28px;
-    background-color: var(--zero-bg); /* Цвет неактивного слайдера */
+    background-color: var(--zero-bg); 
     border: 1px solid var(--zero-border);
   }
 
@@ -257,6 +293,7 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   }
 
+  /* Активное состояние */
   input:checked + .slider {
     background-color: var(--accent);
     border-color: var(--accent);
@@ -266,76 +303,11 @@
     transform: translateX(20px);
   }
   
-  /* --- ТЕМНАЯ ТЕМА (Dark Mode - Активируется системными настройками) --- */
-  @media (prefers-color-scheme: dark) {
-    :root{
-      --bg: #1c1c1e;        
-      --card: #2c2c2e;      
-      --main-text:#ffffff;
-      --muted-text:#ffffff; 
-      --border-color:#555;
-      --panel-border:#555;
-      --line-divider:#444;
-      --green: #2d4538;
-      --red: #4a2c2c;
-      --good: #57d657;
-      --bad: #ff6666;
-      --zero-bg: #444;
-      --zero-border: #777;
-      --zero-text: #ccc;
-      --small-btn-bg: #444;
-    }
-    
-    .card{
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
-    }
-
-    input[type="number"]:focus{
-      box-shadow:0 0 0 2px rgba(0,136,255,0.4);
-    }
-    
-    .small-btn{
-      color: #fff; 
-    }
-
-    .slider:before {
-        background-color: #f2f2f7; 
-    }
-  }
-
-  /* --- ТЕМНАЯ ТЕМА (Ручное принуждение - для переключателя) --- */
-  html.dark-mode :root {
-    /* Дублируем переменные темной темы */
-    --bg: #1c1c1e;        
-    --card: #2c2c2e;      
-    --main-text:#ffffff;
-    --muted-text:#ffffff;
-    --border-color:#555;
-    --panel-border:#555;
-    --line-divider:#444;
-    --green: #2d4538;
-    --red: #4a2c2c;
-    --good: #57d657;
-    --bad: #ff6666;
-    --zero-bg: #444;
-    --zero-border: #777;
-    --zero-text: #ccc;
-    --small-btn-bg: #444;
-  }
-  
-  /* Дополнительные стили, которые нужно переопределить */
-  html.dark-mode .card{
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
-  }
-  html.dark-mode input[type="number"]:focus{
-    box-shadow:0 0 0 2px rgba(0,136,255,0.4);
-  }
-  html.dark-mode .small-btn{
-    color: #fff;
-  }
+  /* Переопределение цвета ползунка в ТЕМНОЙ теме */
   html.dark-mode .slider:before {
       background-color: #f2f2f7; 
   }
+
 
 </style>
 </head>
@@ -441,6 +413,7 @@ function colorize(el, v){
 
   el.textContent = v.toFixed(2) + " ₴";
 
+  // Используем CSS переменные для фона и текста
   if(v > 0){
     el.style.background = "var(--green)";
     el.style.color = "var(--good)";
@@ -451,6 +424,8 @@ function colorize(el, v){
   }
   else {
     el.classList.add("zero");
+    el.style.background = ""; // Сброс фона, чтобы использовался CSS для .zero
+    el.style.color = ""; // Сброс цвета, чтобы использовался CSS для .zero
   }
 }
 
@@ -461,11 +436,6 @@ function getGreeting() {
   if (h >= 12 && h < 17) return "Доброго дня!🌤️";
   if (h >= 17 && h < 23) return "Доброго вечора!🌙✨";
   return "Доброї ночі!✨🌙";
-}
-
-function breakdownString(km, t){
-  if(km <= t.minKm) return `${t.base} × coef`;
-  return `(${t.base} + (${km} - ${t.minKm}) × ${t.perKm}) × coef`;
 }
 
 function genMsg(t, km, coef, actual, paidMinutes, midPoints){
@@ -552,16 +522,15 @@ document.getElementById("calcBtn").onclick = function(){
   document.getElementById('bizMsg').value = genMsg(BIZ, km, coef, actual, paidMinutes, midPoints);
 };
 
-// --- ФУНКЦИОНАЛ КНОПКИ ОЧИСТКИ (НОВЫЙ) ---
+// --- ФУНКЦИОНАЛ КНОПКИ ОЧИСТКИ ---
 document.getElementById("clearBtn").onclick = function(){
-  // Очистка полей ввода
+  // Очистка полей ввода и результатов... (оставлено без изменений)
   document.getElementById("actual").value = '';
   document.getElementById("distance").value = '';
   document.getElementById("coef").value = '';
   document.getElementById("paidMinutes").value = '';
   document.getElementById("midPoints").value = '';
   
-  // Очистка результатов
   document.getElementById("stdCalc").textContent = '—';
   document.getElementById("cfCalc").textContent = '—';
   document.getElementById("bizCalc").textContent = '—';
@@ -574,7 +543,6 @@ document.getElementById("clearBtn").onclick = function(){
   document.getElementById('cfMsg').value = '';
   document.getElementById('bizMsg').value = '';
   
-  // Закрытие доп. полей и сброс
   const extraToggle = document.getElementById('extraToggle');
   const extraFields = document.getElementById('extraFields');
   if (extraToggle.checked) {
@@ -582,7 +550,6 @@ document.getElementById("clearBtn").onclick = function(){
     extraFields.classList.remove('open');
   }
 };
-// --- КОНЕЦ ФУНКЦИОНАЛА КНОПКИ ОЧИСТКИ ---
 
 
 document.getElementById('extraToggle').addEventListener('change', function () {
@@ -599,46 +566,41 @@ document.getElementById('extraToggle').addEventListener('change', function () {
   }
 });
 
-// --- ФУНКЦИОНАЛ ПЕРЕКЛЮЧЕНИЯ ТЕМЫ (НОВЫЙ) ---
+// --- ФУНКЦИОНАЛ ПЕРЕКЛЮЧЕНИЯ ТЕМЫ (ИСПРАВЛЕНО) ---
 const themeToggle = document.getElementById('themeToggle');
-const htmlEl = document.documentElement; // <html> element
+const htmlEl = document.documentElement; 
 const THEME_KEY = 'theme-preference';
 
-// Загрузка предпочтений темы при старте
-function loadThemePreference() {
-  const preference = localStorage.getItem(THEME_KEY);
-  // Используем window.matchMedia для определения системной настройки
-  const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
+// Функция для установки темы на основе сохраненного значения
+function applyTheme(preference) {
   if (preference === 'dark') {
-    // Если пользователь вручную выбрал темную тему
     htmlEl.classList.add('dark-mode');
     themeToggle.checked = true;
-  } else if (preference === 'light') {
-    // Если пользователь вручную выбрал светлую тему
+  } else {
     htmlEl.classList.remove('dark-mode');
     themeToggle.checked = false;
-  } else if (isSystemDark) {
-    // Если нет сохраненного предпочтения, но система в темной теме, включаем переключатель
-    themeToggle.checked = true;
-    // Оставляем system-based dark mode (через @media), класс 'dark-mode' не добавляем
+  }
+}
+
+function loadThemePreference() {
+  const savedPreference = localStorage.getItem(THEME_KEY);
+  
+  if (savedPreference) {
+    // Если есть сохраненное предпочтение, используем его
+    applyTheme(savedPreference);
   } else {
-    // По умолчанию, светлая тема
-    themeToggle.checked = false;
+    // Если нет, используем системное предпочтение
+    const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(isSystemDark ? 'dark' : 'light');
+    // Не сохраняем системное, пока пользователь не переключит вручную
   }
 }
 
 // Обработка ручного переключения
 themeToggle.addEventListener('change', function() {
-  if (this.checked) {
-    // Включили темную тему вручную
-    htmlEl.classList.add('dark-mode');
-    localStorage.setItem(THEME_KEY, 'dark');
-  } else {
-    // Включили светлую тему вручную
-    htmlEl.classList.remove('dark-mode');
-    localStorage.setItem(THEME_KEY, 'light');
-  }
+  const newPreference = this.checked ? 'dark' : 'light';
+  applyTheme(newPreference);
+  localStorage.setItem(THEME_KEY, newPreference);
 });
 
 // Запускаем загрузку темы
