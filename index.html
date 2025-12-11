@@ -43,75 +43,6 @@
     --zero-text:#555;
     --small-btn-bg:#eee;
   }
-
-  /* --- ТЕМНАЯ ТЕМА (1. Активируется системными настройками) --- */
-  @media (prefers-color-scheme: dark) {
-    :root{
-      --bg: #1c1c1e;        
-      --card: #2c2c2e;      
-      --main-text:#ffffff;
-      --muted-text:#ffffff; /* Белый для лейблов */
-      --border-color:#555;
-      --panel-border:#555;
-      --line-divider:#444;
-      --green: #2d4538;
-      --red: #4a2c2c;
-      --good: #57d657;
-      --bad: #ff6666;
-      --zero-bg: #444;
-      --zero-border: #777;
-      --zero-text: #ccc;
-      --small-btn-bg: #444;
-    }
-    
-    .card{
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
-    }
-
-    input[type="number"]:focus{
-      box-shadow:0 0 0 2px rgba(0,136,255,0.4);
-    }
-    
-    .small-btn{
-      color: #fff; 
-    }
-
-    .slider:before {
-        background-color: #f2f2f7; 
-    }
-  }
-
-  /* --- ТЕМНАЯ ТЕМА (2. Принудительное ручное переключение) --- */
-  html[data-theme="dark"] :root {
-    --bg: #1c1c1e;        
-    --card: #2c2c2e;      
-    --main-text:#ffffff;
-    --muted-text:#ffffff;
-    --border-color:#555;
-    --panel-border:#555;
-    --line-divider:#444;
-    --green: #2d4538;
-    --red: #4a2c2c;
-    --good: #57d657;
-    --bad: #ff6666;
-    --zero-bg: #444;
-    --zero-border: #777;
-    --zero-text: #ccc;
-    --small-btn-bg: #444;
-  }
-
-  html[data-theme="dark"] .card{
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
-  }
-  html[data-theme="dark"] input[type="number"]:focus{
-    box-shadow:0 0 0 2px rgba(0,136,255,0.4);
-  }
-  html[data-theme="dark"] .small-btn{
-    color: #fff;
-  }
-  html[data-theme="dark"] .slider:before {
-      background-color: #f2f2f7; 
-  }
   
   /* --- БАЗОВЫЕ СТИЛИ (Одинаковые для обеих тем) --- */
   body{
@@ -334,11 +265,6 @@
 
   input:checked + .slider:before {
     transform: translateX(20px);
-  }
-  
-  /* Переопределение цвета ползунка в ТЕМНОЙ теме */
-  html[data-theme="dark"] .slider:before {
-      background-color: #f2f2f7; 
   }
 
 
@@ -597,39 +523,6 @@ document.getElementById('extraToggle').addEventListener('change', function () {
   }
 });
 
-// --- ИСПРАВЛЕННЫЙ ФУНКЦИОНАЛ ПЕРЕКЛЮЧЕНИЯ ТЕМЫ (ТЕМНАЯ ПО УМОЛЧАНИЮ) ---
-const themeToggle = document.getElementById('themeToggle');
-const htmlEl = document.documentElement; 
-const THEME_KEY = 'theme-preference';
-
-// Устанавливает тему (атрибут data-theme и состояние переключателя)
-function applyTheme(preference) {
-  if (preference === 'dark') {
-    htmlEl.setAttribute('data-theme', 'dark');
-    themeToggle.checked = true;
-  } else { // 'light'
-    htmlEl.setAttribute('data-theme', 'light');
-    themeToggle.checked = false;
-  }
-}
-
-// Загружает сохраненные предпочтения ИЛИ устанавливает 'dark' по умолчанию
-function loadThemePreference() {
-  const savedPreference = localStorage.getItem(THEME_KEY);
-  
-  // Если есть сохраненные, используем их. Иначе устанавливаем 'dark' (темная тема по умолчанию)
-  applyTheme(savedPreference || 'dark');
-}
-
-// Обработка ручного переключения
-themeToggle.addEventListener('change', function() {
-  const newPreference = this.checked ? 'dark' : 'light';
-  applyTheme(newPreference);
-  localStorage.setItem(THEME_KEY, newPreference);
-});
-
-// Запускаем загрузку темы
-loadThemePreference();
 
 // PWA Service Worker registration
 if ('serviceWorker' in navigator) {
