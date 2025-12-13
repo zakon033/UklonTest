@@ -389,8 +389,8 @@
 
 <script>
 const STD = {minKm:1.9, base:105, perKm:17.6, name:"Стандарт", extraMinute:3, extraPoint:10};
-const CFM = {minKm:2.1, base:115, perKm:19.8, name:"Комфорт", extraMinute:3, extraPoint:10};
-const BIZ = {minKm:1.6, base:140, perKm:23.5, name:"Бізнес", extraMinute:4, extraPoint:10};
+const CFM = {minKm:2.1, base:115, perKm:20.4, name:"Комфорт", extraMinute:3, extraPoint:10};
+const BIZ = {minKm:1.6, base:140, perKm:24.2, name:"Бізнес", extraMinute:4, extraPoint:10};
 
 function calcFare(km, t){
   return km <= t.minKm ? t.base : t.base + (km - t.minKm) * t.perKm;
