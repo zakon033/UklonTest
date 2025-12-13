@@ -457,9 +457,8 @@ function genMsg(t, km, coef, actual, paidMinutes, midPoints){
   const greeting = getGreeting();
 
   return `${greeting}
-Прошу провести перерахунок вартості поїздки.
-Розрахункова сума становить ${total.toFixed(2)} грн.
-Деталі розрахунку:
+Прошу перерахувати вартість поїздки.
+Розрахункова сума становить ${total.toFixed(2)} грн.:
 ${lines.join("\n")}
 Фактична — ${actual.toFixed(2)} грн.
 Прошу донарахувати різницю у розмірі ${diff.toFixed(2)} грн.
