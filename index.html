@@ -53,7 +53,7 @@
     
     /* Тексты */
     --main-text:#f0f0f0;
-    --muted-text:#ffffff; 
+    --muted-text:#a0a0a0; /* Змінено для кращого контрасту в темній темі */
     
     /* Границы и разделители */
     --border-color:#333;
@@ -198,7 +198,7 @@
 
   textarea{
     width: 100%;
-    margin: 10px 0;
+    margin: 10px 0 0; /* Зменшений нижній відступ */
     height: 140px;
     border-radius: 10px;
     padding: 10px;
@@ -219,6 +219,32 @@
     color: var(--main-text);
     cursor:pointer;
   }
+  
+  /* --- НОВІ СТИЛІ ДЛЯ РЯДА КНОПКИ КОПІЮВАННЯ І СЧЕТЧИКА --- */
+  .copy-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px; 
+    margin-bottom: 5px;
+  }
+
+  .char-count {
+    font-size: 14px;
+    color: var(--muted-text); /* Сірий колір, не сильно відрізняється від фону */
+    padding: 5px 0;
+    min-width: 40px; 
+  }
+
+  .char-count.limit-ok {
+    color: var(--muted-text);
+  }
+
+  .char-count.limit-exceeded {
+    color: var(--bad); /* Червоний колір */
+    font-weight: 700;
+  }
+  /* --- КІНЕЦЬ НОВИХ СТИЛІВ --- */
   
   /* --- Стили для дополнительных параметров и переключателей --- */
   .toggle-row {
@@ -365,7 +391,10 @@
       <div class="line"><span>Розрахункова сума</span><span class="val" id="stdCalc">—</span></div>
       <div class="line"><span>Різниця</span><span class="diff zero" id="stdDiff">—</span></div>
       <textarea id="stdMsg" placeholder="Повідомлення для оператора зʼявиться тут"></textarea>
-      <button class="small-btn" id="copyStd">Копіювати</button>
+      <div class="copy-row">
+        <button class="small-btn" id="copyStd">Копіювати</button>
+        <span class="char-count" id="stdCharCount">—</span>
+      </div>
     </div>
 
     <div class="panel">
@@ -373,7 +402,10 @@
       <div class="line"><span>Розрахункова сума</span><span class="val" id="cfCalc">—</span></div>
       <div class="line"><span>Різниця</span><span class="diff zero" id="cfDiff">—</span></div>
       <textarea id="cfMsg" placeholder="Повідомлення для оператора зʼявиться тут"></textarea>
-      <button class="small-btn" id="copyCf">Копіювати</button>
+      <div class="copy-row">
+        <button class="small-btn" id="copyCf">Копіювати</button>
+        <span class="char-count" id="cfCharCount">—</span>
+      </div>
     </div>
 
     <div class="panel">
@@ -381,7 +413,10 @@
       <div class="line"><span>Розрахункова сума</span><span class="val" id="bizCalc">—</span></div>
       <div class="line"><span>Різниця</span><span class="diff zero" id="bizDiff">—</span></div>
       <textarea id="bizMsg" placeholder="Повідомлення для оператора зʼявиться тут"></textarea>
-      <button class="small-btn" id="copyBiz">Копіювати</button>
+      <div class="copy-row">
+        <button class="small-btn" id="copyBiz">Копіювати</button>
+        <span class="char-count" id="bizCharCount">—</span>
+      </div>
     </div>
 
   </div>
@@ -391,6 +426,7 @@
 const STD = {minKm:1.9, base:105, perKm:17.6, name:"Стандарт", extraMinute:3, extraPoint:10};
 const CFM = {minKm:2.1, base:115, perKm:20.4, name:"Комфорт", extraMinute:3, extraPoint:10};
 const BIZ = {minKm:1.6, base:140, perKm:24.2, name:"Бізнес", extraMinute:4, extraPoint:10};
+const CHAR_LIMIT = 250; // Ліміт символів
 
 function calcFare(km, t){
   return km <= t.minKm ? t.base : t.base + (km - t.minKm) * t.perKm;
@@ -425,6 +461,29 @@ function colorize(el, v){
   }
 }
 
+// Функція для оновлення лічильника символів
+function updateCharCount(taId, countId, limit = CHAR_LIMIT){
+  const ta = document.getElementById(taId);
+  const countEl = document.getElementById(countId);
+  
+  if (!ta || !countEl) return;
+  
+  const currentCount = ta.value.length;
+  countEl.textContent = `${currentCount}/${limit}`;
+  countEl.className = 'char-count'; // Скидання класів
+  
+  if (currentCount === 0) {
+    countEl.textContent = '—'; // Відображаємо прочерк, коли поле порожнє
+  } else if (currentCount > limit) {
+    // Якщо перевищено - червоний
+    countEl.classList.add('limit-exceeded');
+  } else {
+    // Якщо в нормі - сірий (muted-text)
+    countEl.classList.add('limit-ok');
+  }
+}
+
+
 function getGreeting() {
   const h = new Date().getHours();
 
@@ -452,7 +511,8 @@ function genMsg(t, km, coef, actual, paidMinutes, midPoints){
   }
 
   const diff = total - actual;
-  if(diff <= 0) return "";
+  // Повідомлення генерується лише, якщо розрахункова сума > фактичної
+  if(diff <= 0) return ""; 
 
   const greeting = getGreeting();
 
@@ -472,6 +532,9 @@ function bindCopy(btnId, taId){
     if(!t.value){
       alert('Немає повідомлення для копіювання');
       return;
+    }
+    if (t.value.length > CHAR_LIMIT) {
+      alert(`Увага: Повідомлення перевищує ліміт ${CHAR_LIMIT} символів. Поточна довжина: ${t.value.length}.`);
     }
     t.select();
     t.setSelectionRange(0, 99999);
@@ -513,13 +576,19 @@ document.getElementById("calcBtn").onclick = function(){
   colorize(document.getElementById("cfDiff"), actual - totals.cf);
   colorize(document.getElementById("bizDiff"), actual - totals.biz);
 
+  // Оновлення повідомлень
   document.getElementById('stdMsg').value = genMsg(STD, km, coef, actual, paidMinutes, midPoints);
   document.getElementById('cfMsg').value = genMsg(CFM, km, coef, actual, paidMinutes, midPoints);
   document.getElementById('bizMsg').value = genMsg(BIZ, km, coef, actual, paidMinutes, midPoints);
+  
+  // Оновлення лічильників символів
+  updateCharCount('stdMsg', 'stdCharCount');
+  updateCharCount('cfMsg', 'cfCharCount');
+  updateCharCount('bizMsg', 'bizCharCount');
 };
 
 document.getElementById("clearBtn").onclick = function(){
-  // Очистка полей ввода и результатов
+  // Очистка полів вводу і результатів
   document.getElementById("actual").value = '';
   document.getElementById("distance").value = '';
   document.getElementById("coef").value = '';
@@ -537,6 +606,11 @@ document.getElementById("clearBtn").onclick = function(){
   document.getElementById('stdMsg').value = '';
   document.getElementById('cfMsg').value = '';
   document.getElementById('bizMsg').value = '';
+  
+  // Оновлення лічильників символів
+  updateCharCount('stdMsg', 'stdCharCount');
+  updateCharCount('cfMsg', 'cfCharCount');
+  updateCharCount('bizMsg', 'bizCharCount');
   
   const extraToggle = document.getElementById('extraToggle');
   const extraFields = document.getElementById('extraFields');
