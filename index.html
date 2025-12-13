@@ -497,7 +497,7 @@ function genMsg(t, km, coef, actual, paidMinutes, midPoints){
   const baseFare = calcFare(km, t);
   let total = baseFare * coef;
 
-  let lines = [`• (${t.base} + (${km.toFixed(2)} - ${t.minKm}) × ${t.perKm}) × ${coef.toFixed(2)} = ${(baseFare*coef).toFixed(2)} грн`];
+  let lines = [`• (${t.base} + (${km.toFixed(2)} - ${t.minKm}) × ${t.perKm}) × ${coef.toFixed(2)} = ${(baseFare*coef).toFixed(2)} 💵`];
 
   if(paidMinutes > 0){
     let addPaid = paidMinutes * t.extraMinute;
@@ -521,7 +521,7 @@ function genMsg(t, km, coef, actual, paidMinutes, midPoints){
 Розрахункова сума - ${total.toFixed(2)} 💵:
 ${lines.join("\n")}
 Фактична — ${actual.toFixed(2)} 💵
-Дякую!🤗`;
+Щиро дякую!🤗`;
 }
 
 function bindCopy(btnId, taId){
