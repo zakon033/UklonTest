@@ -497,16 +497,16 @@ function genMsg(t, km, coef, actual, paidMinutes, midPoints){
   const baseFare = calcFare(km, t);
   let total = baseFare * coef;
 
-  let lines = [`• (${t.base} + (${km.toFixed(2)} - ${t.minKm}) × ${t.perKm}) × ${coef.toFixed(2)} = ${(baseFare*coef).toFixed(2)} 💵`];
+  let lines = [`• (${t.base} + (${km.toFixed(2)} - ${t.minKm}) × ${t.perKm}) × ${coef.toFixed(2)} = ${(baseFare*coef).toFixed(2)}💵`];
 
   if(paidMinutes > 0){
     let addPaid = paidMinutes * t.extraMinute;
-    lines.push(`• Платні хв. (${paidMinutes} × ${t.extraMinute} 💵) = ${addPaid.toFixed(2)} 💵`);
+    lines.push(`• Платні хв. (${paidMinutes} × ${t.extraMinute}💵) = ${addPaid.toFixed(2)}💵`);
     total += addPaid;
   }
   if(midPoints > 0){
     let addPoints = midPoints * t.extraPoint;
-    lines.push(`• Проміжні точки (${midPoints} × ${t.extraPoint} 💵) = ${addPoints.toFixed(2)} 💵`);
+    lines.push(`• Проміжні точки (${midPoints} × ${t.extraPoint}💵) = ${addPoints.toFixed(2)}💵`);
     total += addPoints;
   }
 
@@ -517,10 +517,10 @@ function genMsg(t, km, coef, actual, paidMinutes, midPoints){
   const greeting = getGreeting();
 
   return `${greeting}
-Прошу донарахувати ${diff.toFixed(2)} 💵.
-Розрахункова сума - ${total.toFixed(2)} 💵:
+Прошу донарахувати ${diff.toFixed(2)}💵.
+Розрахункова сума - ${total.toFixed(2)}💵:
 ${lines.join("\n")}
-Фактична — ${actual.toFixed(2)} 💵
+Фактична — ${actual.toFixed(2)}💵
 Щиро дякую!🤗`;
 }
 
